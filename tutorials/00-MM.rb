@@ -1,6 +1,7 @@
 # Homework 001
-# Reproducing Drums 
+# Drums Reproducing
 # Original: Mary Magdalene Interlude by FKA twigs
+
 # Elements: 
 #   Drums:
 #   Synths:
@@ -14,7 +15,31 @@
 
 # Globals
 use_random_seed 42
+set :bpm, 100
+# set(:bpm, current_bpm)
+# print 'current bpm: ' + current_bpm.to_s
+# then in thread `use_bpm get(:bpm)` for scoping
 amp_master = 0.5
+
+# TODO: put functions in live_loop for quick layering
+
+=begin
+live_loop :beats do
+  sample :bd_tek
+  with_fx :echo, phase: 0.125, mix: 0.4 do
+    sample :drum_cymbal_soft, sustain: 0, release: 0.1
+    sleep 0.5
+  end
+end
+
+live_loop :bass do
+  use_synth :tb303
+  synth :tb303, note: :e1, release: 4, cutoff: 120, 
+    cutoff_attack: 1
+  sleep 4
+end
+=end
+
 
 
 =begin
@@ -46,7 +71,9 @@ sample :ambi_drone, amp: amp_master,
 PATH_FANTACY = "~/cinos/samples/Fantacy/"
 fantacy_loops = PATH_FANTACY + "/Loops/"
 fantacy_shots = PATH_FANTACY + "/Shots/"
-sample fantacy_loops, "Good Life", lpf: 60, amp: amp_master
+sample fantacy_loops, 0, amp: amp_master
+
+# sample fantacy_loops, "Good Life", lpf: 60, amp: amp_master
 # sample fantacy_loops, :High, lpf: 70, amp: amp_master
 # sample [fantacy_loops, "Fantasy", "BPM"], lpf: 70, amp: amp_master
 # TODO: sample fantacy_loops, lambda{|a| ... }, lpf: 70, amp: amp_master
@@ -66,12 +93,12 @@ sample fantacy_loops, "Good Life", lpf: 60, amp: amp_master
 # TODO: advanced sec 5.7
 
 
-#=begin
+=begin
 live_loop :test do
   play chord(:B3, :m7), amp: amp_master * rand
   sleep 1
 end
-#=end
+=end
 
 
 =begin
@@ -88,9 +115,4 @@ end
 # get lengths, scale and trim them to fit in 
 # make sure they are in the same key
 # sync, thread security
-
-
-
-
-
 
